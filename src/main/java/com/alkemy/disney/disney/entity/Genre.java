@@ -24,7 +24,8 @@ public class Genre {
     private String image;
     private boolean deleted = Boolean.FALSE;
 
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "genre_movie", joinColumns = @JoinColumn(name = "genre_id"), inverseJoinColumns = @JoinColumn(name = "movie_id"))
+
+    @ManyToMany(mappedBy = "genres", cascade = CascadeType.ALL)
     private List<Movie> movies = new ArrayList<>();
+
 }

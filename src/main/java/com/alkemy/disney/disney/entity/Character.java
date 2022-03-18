@@ -14,11 +14,13 @@ public class Character {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String image;
     private String name;
     private int age;
     private double weight;
     private String story;
+
     @ManyToMany(mappedBy = "characters", cascade = CascadeType.ALL)
     private List<Movie> movies = new ArrayList<>();
 }

@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 public class CharacterDTO {
+
     private long id;
     private String image;
     private String name;

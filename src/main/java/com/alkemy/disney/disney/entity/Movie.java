@@ -13,18 +13,33 @@ import java.util.List;
 @Getter
 @Setter
 public class Movie {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String image;
+
     private String title;
+
     @Column(name = "creation_date")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate creationDate;
+
     private int rating;
+
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "character_movie", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "character_id"))
+    @JoinTable(
+            name = "character_movie",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "character_id"))
     private List<Character> characters = new ArrayList<>();
-    @ManyToMany(mappedBy = "movies", cascade = CascadeType.ALL)
+
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(
+            name = "genre_movie",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> genres = new ArrayList<>();
+
 }
