@@ -1,11 +1,21 @@
 package com.alkemy.disney.disney.mapper;
 
 import com.alkemy.disney.disney.dto.CharacterDTO;
+import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.entity.Character;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class CharacterMapper {
+
+    @Autowired
+    MovieMapper movieMapper;
+
+/*------------------------------- Entity-DTO Conversions -------------------------------*/
 
     public Character convertToEntity(CharacterDTO dto) {
         Character entity = new Character();
@@ -14,11 +24,11 @@ public class CharacterMapper {
         entity.setAge(dto.getAge());
         entity.setWeight(dto.getWeight());
         entity.setStory(dto.getStory());
-        entity.setMovies(dto.getMovies());
+
         return entity;
     }
 
-    public  CharacterDTO convertToDto(Character entity) {
+    public  CharacterDTO convertToDTO(Character entity, boolean loadMovies) {
         CharacterDTO dto = new CharacterDTO();
         dto.setId(entity.getId());
         dto.setImage(entity.getImage());
@@ -26,7 +36,32 @@ public class CharacterMapper {
         dto.setAge(entity.getAge());
         dto.setWeight(entity.getWeight());
         dto.setStory(entity.getStory());
-        dto.setMovies(entity.getMovies());
+
+        if (loadMovies) {
+            List<MovieDTO> movieDTOS = movieMapper.convertToDTOList(entity.getMovies(),
+                    false, false);
+            dto.setMovies(movieDTOS);
+        }
         return dto;
+    }
+
+/*------------------------------- Entity-DTO List Conversions -------------------------------*/
+
+    public List<Character> convertToEntityList (List<CharacterDTO> dtoList) {
+        List<Character> entityList = new ArrayList<>();
+
+        for (CharacterDTO dto : dtoList) {
+            entityList.add(convertToEntity(dto));
+        }
+        return entityList;
+    }
+
+    public List<CharacterDTO> convertToDTOList (List<Character> entityList, boolean loadMovies) {
+        List<CharacterDTO> dtoList = new ArrayList<>();
+
+        for (Character entity : entityList) {
+            dtoList.add(convertToDTO(entity, loadMovies));
+        }
+        return dtoList;
     }
 }

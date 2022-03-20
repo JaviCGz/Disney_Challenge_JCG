@@ -1,6 +1,5 @@
 package com.alkemy.disney.disney.dto;
 
-import com.alkemy.disney.disney.entity.Movie;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,5 +16,5 @@ public class CharacterDTO {
     private int age;
     private double weight;
     private String story;
-    private List<Movie> movies = new ArrayList<>();
+    private List<MovieDTO> movies = new ArrayList<>();
 }

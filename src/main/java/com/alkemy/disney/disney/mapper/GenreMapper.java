@@ -17,10 +17,12 @@ public class GenreMapper {
     MovieMapper movieMapper;
 
 /*------------------------------- Entity-DTO Conversions -------------------------------*/
+
     public Genre convertToEntity (GenreDTO dto) {
         Genre entity = new Genre();
         entity.setImage(dto.getImage());
         entity.setName(dto.getName());
+
         return entity;
     }
 
@@ -31,7 +33,8 @@ public class GenreMapper {
         dto.setName(entity.getName());
 
         if (loadMovies) {
-            List<MovieDTO> movieDTOS = movieMapper.convertToDTOList(entity.getMovies(), false);
+            List<MovieDTO> movieDTOS = movieMapper.convertToDTOList(entity.getMovies(),
+                    false, false);
             dto.setMovies(movieDTOS);
         }
         return dto;
@@ -74,4 +77,6 @@ public class GenreMapper {
         basicDTO.setImage(entity.getImage());
         return basicDTO;
     }
+
+//TODO: refreshValues(), lookForOrCreate(), convertStringToLocalDate()
 }

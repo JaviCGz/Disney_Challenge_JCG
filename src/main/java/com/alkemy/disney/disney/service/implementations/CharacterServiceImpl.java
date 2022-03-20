@@ -19,7 +19,7 @@ public class CharacterServiceImpl implements CharacterService {
     public CharacterDTO save(CharacterDTO dto) {
         Character entity = characterMapper.convertToEntity(dto);
         Character entitySaved = characterRepository.save(entity);
-        CharacterDTO dtoSaved = characterMapper.convertToDto(entitySaved);
+        CharacterDTO dtoSaved = characterMapper.convertToDTO(entitySaved, false);
         return dtoSaved;
     }
 }
