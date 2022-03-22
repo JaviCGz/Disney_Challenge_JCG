@@ -1,5 +1,6 @@
 package com.alkemy.disney.disney.service.implementations;
 
+import com.alkemy.disney.disney.dto.BasicGenreDTO;
 import com.alkemy.disney.disney.dto.GenreDTO;
 import com.alkemy.disney.disney.entity.Genre;
 import com.alkemy.disney.disney.mapper.GenreMapper;
@@ -12,8 +13,8 @@ import java.util.List;
 @Service
 public class GenreServiceImpl implements GenreService {
 
-    public GenreMapper genreMapper;
-    public GenreRepository genreRepository;
+    private final GenreMapper genreMapper;
+    private final GenreRepository genreRepository;
 
     public GenreServiceImpl(GenreMapper genreMapper, GenreRepository genreRepository) {
         this.genreMapper = genreMapper;
@@ -27,10 +28,14 @@ public class GenreServiceImpl implements GenreService {
         return genreMapper.convertToDTO(savedEntity, false);
     }
 
-    public List<GenreDTO> getAll () {
+    public List<BasicGenreDTO> getAll () {
         List<Genre> entities = genreRepository.findAll();
 //In this method I used to call convertToBasicDTOList() method which does not need a boolean parameter
-        return genreMapper.convertToDTOList(entities, false);
+        return genreMapper.convertToBasicDTOList(entities);
+    }
+    
+    public void delete (Long id) {
+        genreRepository.deleteById(id);
     }
 
 }

@@ -78,5 +78,5 @@ public class GenreMapper {
         return basicDTO;
     }
 
-//TODO: refreshValues(), lookForOrCreate(), convertStringToLocalDate()
+//TODO: genreMapper -> refreshValues(), lookForOrCreate()
 }

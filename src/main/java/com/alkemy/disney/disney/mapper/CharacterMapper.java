@@ -1,5 +1,6 @@
 package com.alkemy.disney.disney.mapper;
 
+import com.alkemy.disney.disney.dto.BasicCharacterDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.entity.Character;
@@ -64,4 +65,23 @@ public class CharacterMapper {
         }
         return dtoList;
     }
+    
+    public List<BasicCharacterDTO> convertToBasicDTOList (List<Character> entityList) {
+        List<BasicCharacterDTO> basicDTOList = new ArrayList<>();
+        
+        for (Character entity : entityList) {
+            basicDTOList.add(convertToBasicDTO(entity));
+        }
+        return basicDTOList;
+    }
+
+/*------------------------------- Internal Methods -------------------------------*/
+    
+    private BasicCharacterDTO convertToBasicDTO (Character entity) {
+        BasicCharacterDTO basicDTO = new BasicCharacterDTO();
+        basicDTO.setImage(entity.getImage());
+        basicDTO.setName(entity.getName());
+        return basicDTO;
+    }
+    
 }
