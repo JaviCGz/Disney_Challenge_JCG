@@ -84,6 +84,17 @@ public class MovieMapper {
         return basicDTOList;
     }
     
+    /*------------------------------- Additional methods -------------------------------*/
+    
+    public void refreshValues(Movie entity, MovieDTO dto) {
+        entity.setImage(dto.getImage());
+        entity.setTitle(dto.getTitle());
+        entity.setCreationDate(convertStringToLocalDate(dto.getCreationDate()));
+        entity.setRating(dto.getRating());
+    }
+    
+    
+    
     /*------------------------------- Internal Methods -------------------------------*/
     
     private LocalDate convertStringToLocalDate (String stringDate) {
@@ -98,5 +109,5 @@ public class MovieMapper {
         basicDTO.setCreationDate(entity.getCreationDate().toString());
         return basicDTO;
     }
-//TODO: movieMapper -> refreshValues(), lookForOrCreate()
+//TODO: movieMapper -> lookForOrCreate()
 }

@@ -37,4 +37,19 @@ public class MovieController {
         
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<MovieDTO> update(@PathVariable Long id, @RequestBody MovieDTO dto) {
+        MovieDTO updatedMovie = movieService.update(id, dto);
+    
+        return ResponseEntity.ok(updatedMovie);
+    }
+    
+    /*TODO: Ya están listas las opciones para obtener, actualizar y eliminar las entidades.
+       Falta por hacer:
+       Agregar las validaciones de los dto recibidos para que no llegue ningún campo vacío
+       Agregar las excepciones correspondientes
+       Agregar get por filtros
+       Agregar get de detalles
+       Después de eso ya puedo continuar por agregar SendGrid*/
 }

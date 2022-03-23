@@ -10,5 +10,6 @@ public interface GenreService {
     List<BasicGenreDTO> getAll();
     GenreDTO save(GenreDTO dto);
     void delete(Long id);
+    GenreDTO update(Long id, GenreDTO dto);
     
 }

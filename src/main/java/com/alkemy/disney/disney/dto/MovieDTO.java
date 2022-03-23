@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 public class MovieDTO {
 
-    private long id;
+    private Long id;
     private String image;
     private String title;
     private String creationDate;

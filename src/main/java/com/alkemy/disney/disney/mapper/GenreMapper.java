@@ -68,8 +68,15 @@ public class GenreMapper {
         }
         return basicDTOList;
     }
-
-/*------------------------------- Internal Methods -------------------------------*/
+    
+    /*------------------------------- Additional methods -------------------------------*/
+    
+    public void refreshValues (Genre entity, GenreDTO dto) {
+        entity.setName(dto.getName());
+        entity.setImage(dto.getImage());
+    }
+    
+    /*------------------------------- Internal Methods -------------------------------*/
 
     private BasicGenreDTO convertToBasicDTO (Genre entity) {
         BasicGenreDTO basicDTO = new BasicGenreDTO();
@@ -78,5 +85,5 @@ public class GenreMapper {
         return basicDTO;
     }
 
-//TODO: genreMapper -> refreshValues(), lookForOrCreate()
+//TODO: genreMapper -> lookForOrCreate()
 }

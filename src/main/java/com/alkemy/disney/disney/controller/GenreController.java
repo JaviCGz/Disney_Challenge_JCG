@@ -37,5 +37,12 @@ public class GenreController {
         
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<GenreDTO> update(@PathVariable Long id, @RequestBody GenreDTO dto) {
+        GenreDTO updatedGenre = genreService.update(id, dto);
+    
+        return ResponseEntity.ok(updatedGenre);
+    }
+    
 }

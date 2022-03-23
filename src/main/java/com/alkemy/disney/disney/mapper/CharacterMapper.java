@@ -74,8 +74,18 @@ public class CharacterMapper {
         }
         return basicDTOList;
     }
-
-/*------------------------------- Internal Methods -------------------------------*/
+    
+    /*------------------------------- Additional methods -------------------------------*/
+    
+    public void refreshValues (Character entity, CharacterDTO dto) {
+        entity.setImage(dto.getImage());
+        entity.setName(dto.getName());
+        entity.setAge(dto.getAge());
+        entity.setWeight(dto.getWeight());
+        entity.setStory(dto.getStory());
+    }
+    
+    /*------------------------------- Internal Methods -------------------------------*/
     
     private BasicCharacterDTO convertToBasicDTO (Character entity) {
         BasicCharacterDTO basicDTO = new BasicCharacterDTO();
