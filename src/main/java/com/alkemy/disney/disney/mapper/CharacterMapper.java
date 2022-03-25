@@ -4,17 +4,23 @@ import com.alkemy.disney.disney.dto.BasicCharacterDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.entity.Character;
+import com.alkemy.disney.disney.exception.ParamNotFound;
+import com.alkemy.disney.disney.repository.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class CharacterMapper {
 
     @Autowired
     MovieMapper movieMapper;
+    
+    @Autowired
+    CharacterRepository characterRepository;
 
 /*------------------------------- Entity-DTO Conversions -------------------------------*/
 
@@ -83,6 +89,24 @@ public class CharacterMapper {
         entity.setAge(dto.getAge());
         entity.setWeight(dto.getWeight());
         entity.setStory(dto.getStory());
+    }
+    
+    public List<Character> lookForOrCreateCharacter(List<CharacterDTO> dtoList) {
+        List<Character> entityList = new ArrayList<>();
+        for(CharacterDTO dto : dtoList) {
+            if (dto.getId() != null) {
+                Optional<Character> result = characterRepository.findById(dto.getId());
+                if (result.isPresent()) {
+                    entityList.add(result.get());
+                } else {
+                    throw new ParamNotFound("A non-existent ID. was received." +
+                            "New characters must not have an user-assign ID.");
+                }
+            } else {
+                entityList.add(convertToEntity(dto));
+            }
+        }
+        return entityList;
     }
     
     /*------------------------------- Internal Methods -------------------------------*/

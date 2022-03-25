@@ -63,6 +63,7 @@ public class MovieMapper {
         for (MovieDTO dto : dtoList) {
             entityList.add(convertToEntity(dto));
         }
+        
         return entityList;
     }
     
@@ -92,8 +93,6 @@ public class MovieMapper {
         entity.setCreationDate(convertStringToLocalDate(dto.getCreationDate()));
         entity.setRating(dto.getRating());
     }
-    
-    
     
     /*------------------------------- Internal Methods -------------------------------*/
     

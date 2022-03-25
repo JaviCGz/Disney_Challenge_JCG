@@ -20,11 +20,11 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String image;
     private String title;
-    private int rating;
+    private Byte rating;
     private boolean deleted = Boolean.FALSE;
     
     @Column(name = "creation_date")

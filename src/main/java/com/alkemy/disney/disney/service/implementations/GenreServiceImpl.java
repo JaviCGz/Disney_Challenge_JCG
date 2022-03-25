@@ -3,6 +3,7 @@ package com.alkemy.disney.disney.service.implementations;
 import com.alkemy.disney.disney.dto.BasicGenreDTO;
 import com.alkemy.disney.disney.dto.GenreDTO;
 import com.alkemy.disney.disney.entity.Genre;
+import com.alkemy.disney.disney.exception.InvalidDTOException;
 import com.alkemy.disney.disney.exception.ParamNotFound;
 import com.alkemy.disney.disney.mapper.GenreMapper;
 import com.alkemy.disney.disney.repository.GenreRepository;
@@ -24,6 +25,8 @@ public class GenreServiceImpl implements GenreService {
     }
 
     public GenreDTO save (GenreDTO dto) {
+        
+        validateReceivedDTO(dto);
         Genre entity = genreMapper.convertToEntity(dto);
         Genre savedEntity = genreRepository.save(entity);
 //Movies are not going to be created here
@@ -41,6 +44,8 @@ public class GenreServiceImpl implements GenreService {
     }
     
     public GenreDTO update (Long id, GenreDTO dto) {
+        
+        validateReceivedDTO(dto);
         Optional<Genre> entity = genreRepository.findById(id);
         if (entity.isEmpty()) {
             throw new ParamNotFound("Genre ID. not found in database");
@@ -50,5 +55,17 @@ public class GenreServiceImpl implements GenreService {
     
         return genreMapper.convertToDTO(savedGenre, false);
     }
-
+    
+    private void validateReceivedDTO(GenreDTO dto) {
+        if (dto == null) {
+            throw new InvalidDTOException("No genre was received");
+        }
+        if (dto.getName() == null || dto.getName().isBlank()) {
+            throw new InvalidDTOException("Genre must have a name");
+        }
+        if (dto.getImage() == null || dto.getImage().isBlank()) {
+            throw new InvalidDTOException("Genre must have an image");
+        }
+    }
+    
 }

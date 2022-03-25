@@ -14,7 +14,7 @@ public class MovieDTO {
     private String image;
     private String title;
     private String creationDate;
-    private int rating;
+    private Byte rating;
     private List<CharacterDTO> characters = new ArrayList<>();
     private List<GenreDTO> genres = new ArrayList<>();
 

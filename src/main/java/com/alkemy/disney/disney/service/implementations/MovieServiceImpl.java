@@ -3,6 +3,7 @@ package com.alkemy.disney.disney.service.implementations;
 import com.alkemy.disney.disney.dto.BasicMovieDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.entity.Movie;
+import com.alkemy.disney.disney.exception.InvalidDTOException;
 import com.alkemy.disney.disney.exception.ParamNotFound;
 import com.alkemy.disney.disney.mapper.MovieMapper;
 import com.alkemy.disney.disney.repository.MovieRepository;
@@ -25,6 +26,8 @@ public class MovieServiceImpl implements MovieService {
     
 //TODO: Add boolean parameter in movieMapper->convertToEntity for save genre if it boolean is true
     public MovieDTO save(MovieDTO dto) {
+        
+        validateReceivedDTO(dto);
         Movie entity = movieMapper.convertToEntity(dto);
         Movie savedEntity = movieRepository.save(entity);
         
@@ -42,6 +45,8 @@ public class MovieServiceImpl implements MovieService {
     }
     
     public MovieDTO update(Long id, MovieDTO dto) {
+        
+        validateReceivedDTO(dto);
         Optional<Movie> entity = movieRepository.findById(id);
         if (entity.isEmpty()) {
         throw new ParamNotFound("Movie ID. not found in database");
@@ -50,5 +55,23 @@ public class MovieServiceImpl implements MovieService {
         Movie savedEntity = movieRepository.save(entity.get());
     
         return movieMapper.convertToDTO(savedEntity, false, false);
+    }
+    
+    private void validateReceivedDTO(MovieDTO dto) {
+        if (dto == null) {
+            throw new InvalidDTOException("No movie was received");
+        }
+        if (dto.getImage() == null || dto.getImage().isBlank()) {
+            throw new InvalidDTOException("Movie must have an image");
+        }
+        if (dto.getTitle() == null || dto.getTitle().isBlank()) {
+            throw new InvalidDTOException("Movie must have a title");
+        }
+        if (dto.getCreationDate() == null || dto.getCreationDate().isBlank()) {
+            throw new InvalidDTOException("Movie must have a creation date");
+        }
+        if (dto.getRating() == null) {
+            throw new InvalidDTOException("Movie must have a rating");
+        }
     }
 }

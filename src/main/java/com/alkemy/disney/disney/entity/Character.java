@@ -18,12 +18,12 @@ import java.util.List;
 public class Character {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String image;
     private String name;
-    private int age;
-    private double weight;
+    private Integer age;
+    private Float weight;
     private String story;
     private boolean deleted = Boolean.FALSE;
 

@@ -13,8 +13,8 @@ public class CharacterDTO {
     private Long id;
     private String image;
     private String name;
-    private int age;
-    private double weight;
+    private Integer age;
+    private Float weight;
     private String story;
     private List<MovieDTO> movies = new ArrayList<>();
 }
