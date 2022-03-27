@@ -5,7 +5,10 @@ import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.dto.GenreDTO;
 import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.entity.Movie;
+import com.alkemy.disney.disney.service.CharacterService;
+import com.alkemy.disney.disney.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -16,10 +19,15 @@ import java.util.List;
 @Component
 public class MovieMapper {
     
+    private final CharacterService characterService;
+    private final GenreService genreService;
+    
+    //@Lazy annotation used to avoid circular references
     @Autowired
-    GenreMapper genreMapper;
-    @Autowired
-    CharacterMapper characterMapper;
+    public MovieMapper(@Lazy CharacterService characterService,@Lazy GenreService genreService) {
+        this.characterService = characterService;
+        this.genreService = genreService;
+    }
     
     /*------------------------------- Entity-DTO Conversions -------------------------------*/
     
@@ -29,7 +37,8 @@ public class MovieMapper {
         entity.setTitle(dto.getTitle());
         entity.setCreationDate(convertStringToLocalDate(dto.getCreationDate()));
         entity.setRating(dto.getRating());
-//consider adding movies and genres list in saving process
+        entity.setCharacters(characterService.lookForOrCreate(dto.getCharacters()));
+        entity.setGenres(genreService.lookForOrCreate(dto.getGenres()));
         return entity;
     }
     
@@ -42,13 +51,13 @@ public class MovieMapper {
         dto.setRating(entity.getRating());
     
         if (loadGenres) {
-            List<GenreDTO> genreDTOS = genreMapper.convertToDTOList(entity.getGenres(),
+            List<GenreDTO> genreDTOS = genreService.convertToDTOList(entity.getGenres(),
                     false);
             dto.setGenres(genreDTOS);
         }
     
         if (loadCharacters) {
-            List<CharacterDTO> characterDTOS = characterMapper.convertToDTOList(entity.getCharacters(),
+            List<CharacterDTO> characterDTOS = characterService.convertToDTOList(entity.getCharacters(),
                     false);
             dto.setCharacters(characterDTOS);
         }

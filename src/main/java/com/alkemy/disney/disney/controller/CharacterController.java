@@ -2,6 +2,7 @@ package com.alkemy.disney.disney.controller;
 
 import com.alkemy.disney.disney.dto.BasicCharacterDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
+import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.entity.Character;
 import com.alkemy.disney.disney.service.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,24 @@ public class CharacterController {
     public ResponseEntity<List<BasicCharacterDTO>> getAll() {
         List<BasicCharacterDTO> characters = characterService.getAll();
 
+        return ResponseEntity.ok().body(characters);
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<CharacterDTO> getDetailsById(@PathVariable Long id) {
+        CharacterDTO character = characterService.getDetails(id);
+    
+        return ResponseEntity.ok().body(character);
+    }
+    
+    @GetMapping("/filters")
+    public ResponseEntity<List<CharacterDTO>> getByFilters(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer age,
+            @RequestParam(required = false) List<Long> moviesId
+            ) {
+        List<CharacterDTO> characters = characterService.getByFilters(name, age, moviesId);
+    
         return ResponseEntity.ok().body(characters);
     }
     

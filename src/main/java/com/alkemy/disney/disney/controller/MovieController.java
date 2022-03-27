@@ -24,6 +24,24 @@ public class MovieController {
         return ResponseEntity.ok().body(movies);
     }
     
+    @GetMapping("/{id}")
+    public ResponseEntity<MovieDTO> getDetailsById(@PathVariable Long id) {
+        MovieDTO movie = movieService.getDetails(id);
+        
+        return ResponseEntity.ok().body(movie);
+    }
+    
+    @GetMapping("/filters")
+    public ResponseEntity<List<MovieDTO>> getByFilters(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) List<Long> genresId,
+            @RequestParam(required = false, defaultValue = "ASC") String order
+    ) {
+        List<MovieDTO> movies = movieService.getByFilters(title, genresId, order);
+    
+        return ResponseEntity.ok().body(movies);
+    }
+    
     @PostMapping
     public ResponseEntity<MovieDTO> save(@RequestBody MovieDTO dto) {
         MovieDTO savedMovie = movieService.save(dto);
@@ -45,11 +63,5 @@ public class MovieController {
         return ResponseEntity.ok(updatedMovie);
     }
     
-    /*TODO: Ya están listas las opciones para obtener, actualizar y eliminar las entidades.
-       Falta por hacer:
-       Agregar las validaciones de los dto recibidos para que no llegue ningún campo vacío
-       Agregar las excepciones correspondientes
-       Agregar get por filtros
-       Agregar get de detalles
-       Después de eso ya puedo continuar por agregar SendGrid*/
+    /*TODO: Agregar SendGrid*/
 }

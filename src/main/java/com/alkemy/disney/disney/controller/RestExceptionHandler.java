@@ -2,7 +2,7 @@ package com.alkemy.disney.disney.controller;
 
 import com.alkemy.disney.disney.dto.ApiErrorDTO;
 import com.alkemy.disney.disney.exception.InvalidDTOException;
-import com.alkemy.disney.disney.exception.ParamNotFound;
+import com.alkemy.disney.disney.exception.NotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ import java.util.List;
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     
-    @ExceptionHandler(value = {ParamNotFound.class})
+    @ExceptionHandler(value = {NotFoundException.class})
     protected ResponseEntity<Object> handleParamNotFound(RuntimeException ex, WebRequest request) {
         ApiErrorDTO errorDTO= new ApiErrorDTO(
                 HttpStatus.BAD_REQUEST,
