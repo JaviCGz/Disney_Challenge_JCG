@@ -30,13 +30,11 @@ public class GenreServiceImpl implements GenreService {
         validateReceivedDTO(dto);
         Genre entity = genreMapper.convertToEntity(dto);
         Genre savedEntity = genreRepository.save(entity);
-//Movies are not going to be created here
         return genreMapper.convertToDTO(savedEntity, false);
     }
 
     public List<BasicGenreDTO> getAll () {
         List<Genre> entities = genreRepository.findAll();
-//In this method I used to call convertToBasicDTOList() method which does not need a boolean parameter
         return genreMapper.convertToBasicDTOList(entities);
     }
     

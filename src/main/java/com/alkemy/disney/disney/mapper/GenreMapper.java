@@ -84,6 +84,5 @@ public class GenreMapper {
         basicDTO.setImage(entity.getImage());
         return basicDTO;
     }
-
-//TODO: genreMapper -> lookForOrCreate()
+    
 }

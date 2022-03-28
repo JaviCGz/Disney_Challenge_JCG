@@ -9,5 +9,9 @@ import java.util.List;
 
 @Repository
 public interface CharacterRepository extends JpaRepository<Character, Long> {
+    /**
+     * Method used to search for characters(DTO) matching a given specification.
+     * @param spec: Search specifications
+     */
     List<Character> findAll(Specification<Character> spec);
 }

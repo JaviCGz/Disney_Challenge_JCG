@@ -8,7 +8,6 @@ import com.alkemy.disney.disney.exception.InvalidDTOException;
 import com.alkemy.disney.disney.exception.NotFoundException;
 import com.alkemy.disney.disney.mapper.MovieMapper;
 import com.alkemy.disney.disney.repository.MovieRepository;
-import com.alkemy.disney.disney.repository.specifications.CharacterSpecification;
 import com.alkemy.disney.disney.repository.specifications.MovieSpecification;
 import com.alkemy.disney.disney.service.MovieService;
 import org.springframework.stereotype.Service;
