@@ -39,6 +39,7 @@ public class MovieMapper {
         entity.setRating(dto.getRating());
         entity.setCharacters(characterService.lookForOrCreate(dto.getCharacters()));
         entity.setGenres(genreService.lookForOrCreate(dto.getGenres()));
+        
         return entity;
     }
     

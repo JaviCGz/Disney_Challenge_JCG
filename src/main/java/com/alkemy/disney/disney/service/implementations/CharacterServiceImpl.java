@@ -3,7 +3,6 @@ package com.alkemy.disney.disney.service.implementations;
 import com.alkemy.disney.disney.dto.BasicCharacterDTO;
 import com.alkemy.disney.disney.dto.CharacterDTO;
 import com.alkemy.disney.disney.dto.CharacterFiltersDTO;
-import com.alkemy.disney.disney.dto.MovieDTO;
 import com.alkemy.disney.disney.entity.Character;
 import com.alkemy.disney.disney.exception.InvalidDTOException;
 import com.alkemy.disney.disney.exception.NotFoundException;
@@ -33,7 +32,7 @@ public class CharacterServiceImpl implements CharacterService {
 
     public CharacterDTO save(CharacterDTO dto) {
         
-        validateReceivedDTO(dto, true);
+        validateReceivedDTO(dto);
         Character entity = characterMapper.convertToEntity(dto);
         Character entitySaved = characterRepository.save(entity);
         
@@ -52,7 +51,7 @@ public class CharacterServiceImpl implements CharacterService {
     
     public CharacterDTO update(Long id, CharacterDTO dto) {
         
-        validateReceivedDTO(dto, false);
+        validateReceivedDTO(dto);
         Optional<Character> entity = characterRepository.findById(id);
         if (entity.isEmpty()) {
             throw new NotFoundException("Character ID. not found");
@@ -97,7 +96,7 @@ public class CharacterServiceImpl implements CharacterService {
                             "New characters must not have an user-assign ID.");
                 }
             } else {
-                validateReceivedDTO(dto, false);
+                validateReceivedDTO(dto);
                 entityList.add(characterMapper.convertToEntity(dto));
             }
         }
@@ -105,7 +104,7 @@ public class CharacterServiceImpl implements CharacterService {
         return entityList;
     }
     
-    private void validateReceivedDTO(CharacterDTO dto, boolean extraValidation) {
+    private void validateReceivedDTO(CharacterDTO dto) {
         
         if (dto == null) {
             throw new InvalidDTOException("No character was received");
@@ -124,11 +123,6 @@ public class CharacterServiceImpl implements CharacterService {
         }
         if (dto.getStory() == null || dto.getStory().isBlank()) {
             throw new InvalidDTOException("Character must have a story");
-        }
-        if (extraValidation) {
-            if (dto.getMovies() == null || dto.getMovies().isEmpty()) {
-                throw new InvalidDTOException("Character must be in at least one movie");
-            }
         }
     }
     

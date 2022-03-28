@@ -3,6 +3,7 @@ package com.alkemy.disney.disney.auth.service;
 import com.alkemy.disney.disney.auth.dto.UserDTO;
 import com.alkemy.disney.disney.auth.entity.UserEntity;
 import com.alkemy.disney.disney.auth.repository.UserRepository;
+import com.alkemy.disney.disney.exception.InvalidDTOException;
 import com.alkemy.disney.disney.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -32,15 +33,30 @@ public class UserDetailsCustomService implements UserDetailsService {
     }
     
     public boolean save(UserDTO userDTO) {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setUsername(userDTO.getUsername());
-        userEntity.setPassword(userDTO.getPassword());
-        userEntity = this.userRepository.save(userEntity);
     
-        if (userEntity != null) {
-            emailService.sendWelcomeEmailTo(userEntity.getUsername());
+        if (userDTO.getUsername().isBlank() || userDTO.getUsername() == null) {
+            throw new InvalidDTOException("Enter a username");
+        }
+    
+        if (userDTO.getPassword().isBlank() || userDTO.getPassword() == null) {
+            throw new InvalidDTOException("Enter a password");
         }
         
-        return userEntity != null;
+        if (userRepository.findByUsername(userDTO.getUsername()) != null) {
+            throw new InvalidDTOException("There is already a registered user with this email address");
+        }
+        
+        UserEntity userEntity = new UserEntity();
+        
+        userEntity.setUsername(userDTO.getUsername());
+        userEntity.setPassword(userDTO.getPassword());
+        
+        userEntity = this.userRepository.save(userEntity);
+        
+        emailService.sendWelcomeEmailTo(userEntity.getUsername());
+        
+        /*Replaced by true because if userEntity where null the method would never return anything*/
+        /*return userEntity != null;*/
+        return true;
     }
 }

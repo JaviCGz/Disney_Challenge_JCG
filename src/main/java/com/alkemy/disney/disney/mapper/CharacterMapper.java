@@ -32,7 +32,6 @@ public class CharacterMapper {
         entity.setAge(dto.getAge());
         entity.setWeight(dto.getWeight());
         entity.setStory(dto.getStory());
-        
         return entity;
     }
     

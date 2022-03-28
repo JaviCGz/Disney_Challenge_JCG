@@ -12,6 +12,7 @@ import com.alkemy.disney.disney.repository.specifications.MovieSpecification;
 import com.alkemy.disney.disney.service.MovieService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
